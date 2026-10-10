@@ -1,0 +1,4 @@
+interface:
+  display_name: "Job Portfolio README"
+  short_description: "Evidence-led bilingual READMEs for hiring portfolios"
+  default_prompt: "Use $job-portfolio-readme to rewrite this project's bilingual README for recruiter-facing presentation."

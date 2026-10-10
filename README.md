@@ -2,90 +2,41 @@
 
 [English](#english) · [中文](#中文)
 
-A reusable Codex skill for turning real GitHub repositories into **evidence-based bilingual portfolio READMEs**. It helps inspect repository evidence, clarify personal contribution and upstream attribution, select a project-specific structure, and keep internal audit findings out of public-facing copy.
-
-This is an instruction-and-reference skill: it does not require an API key, external service, or runtime dependency.
+Turn a real GitHub repository into a polished bilingual README for job applications and technical portfolios—without inventing results, overstating ownership, or forcing every project into the same template.
 
 ## English
 
-### Why this skill exists
+### What it does
 
-Portfolio READMEs often fail in one of two directions. Some are only installation notes and never explain the project's value or the author's contribution. Others sound polished but overstate ownership, invent results, or publish security and repository-hygiene observations that belong in a private review.
+`job-portfolio-readme` helps Codex inspect a repository and create or revise its public README. It can:
 
-This skill defines a repeatable workflow for a better middle ground:
+- inspect source code, dependencies, documentation, tests, results, demos, licences, and attribution;
+- identify the strongest evidence-backed project story;
+- distinguish personal, team, adapted, and upstream work;
+- choose a structure suited to the project type;
+- explain technologies through their actual role in the system;
+- write complete, natural Chinese and English editions;
+- keep security and repository-cleanup notes out of public-facing copy;
+- review the result with a recruiter-focused quality rubric.
 
-- inspect code, documentation, results, media, licences, and attribution before writing;
-- build claims from repository evidence instead of filling a generic template;
-- distinguish **implemented**, **adapted**, **integrated**, **extended**, and **team-owned** work;
-- choose a different information structure for research, robotics, RAG, automation, web, portfolio, and model-integration projects;
-- write complete, natural Chinese and English editions from the same fact model;
-- separate the recruiter-facing README from private security, provenance, and cleanup notes;
-- review the final draft against a 100-point quality rubric and automatic-failure checks.
+### Supported projects
 
-### Is a skill just a large prompt?
+- Research and experimental projects
+- Robotics and ROS systems
+- Automation and data workflows
+- AI and RAG applications
+- Products built around upstream models
+- Web and course projects
+- Portfolio and static sites
+- Libraries and developer tools
 
-`SKILL.md` is the instruction core, so it is prompt-like—but a skill is a small reusable workflow package rather than one long message. Codex first sees the skill's name and description, loads the full instructions when the task matches, and then follows linked references only when needed.
+The structure changes with the project. Research READMEs lead with the question, method, and results; robotics READMEs focus on system context and interfaces; model-integration projects separate the upstream model from the product and integration work.
 
-In this repository:
+### Install
 
-- `SKILL.md` defines the trigger conditions, workflow, output boundaries, and non-negotiable rules;
-- `references/quality-rubric.md` provides scoring and automatic-failure criteria;
-- `references/project-archetypes.md` provides project-specific structures without enforcing one template;
-- `references/bilingual-style.md` defines Chinese/English parity and ownership vocabulary;
-- `agents/openai.yaml` supplies display metadata and a default invocation prompt.
+Codex discovers skills from folders containing a `SKILL.md` file. Install this repository for your user account or inside one project.
 
-The result is easier to maintain, inspect, and reuse than a single copy-pasted prompt.
-
-### Workflow
-
-```text
-resolve audience and scope
-          │
-          ▼
-inspect repository evidence
-          │
-          ▼
-build a private claim ledger
-          │
-          ▼
-identify the portfolio thesis
-          │
-          ▼
-choose a project archetype
-          │
-          ▼
-draft natural Chinese and English editions
-          │
-          ▼
-score the public README and check attribution
-          │
-          ▼
-publish README + deliver private findings separately
-```
-
-Three reading depths guide the public README:
-
-1. **15 seconds:** project value, strongest evidence or demo, and personal role.
-2. **2 minutes:** architecture, contribution, technology roles, and results.
-3. **Technical follow-up:** decisions, trade-offs, evaluation, reproduction, and attribution.
-
-### Public README vs. private review
-
-| Public README | Private delivery report |
-|---|---|
-| Project value and user/research outcome | Credential rotation and historical exposure |
-| Personal contribution and ownership boundary | Repository cleanup and hygiene observations |
-| Architecture and meaningful decisions | Missing production-hardening suggestions |
-| Verified results, demos, and artifacts | Unverified claims and provenance questions |
-| Setup, usage, and concise attribution | Follow-up work that should not become public copy |
-
-This separation prevents a portfolio README from turning into an audit report or apology while keeping the private review honest.
-
-### Installation
-
-Codex skills can be installed for one user under `~/.codex/skills/` or scoped to one repository under `.codex/skills/`. The folder containing `SKILL.md` is the skill package.
-
-#### User-scoped installation
+#### User-scoped
 
 macOS/Linux:
 
@@ -101,38 +52,74 @@ git clone https://github.com/XuYu-kyra/readme-skill.git `
   "$env:USERPROFILE\.codex\skills\job-portfolio-readme"
 ```
 
-#### Repository-scoped installation
+#### Repository-scoped
 
-Run from the target repository:
+Run from the repository you want Codex to work on:
 
 ```bash
 git clone https://github.com/XuYu-kyra/readme-skill.git \
   .codex/skills/job-portfolio-readme
 ```
 
-Start a new Codex conversation after installation so the skill metadata is included in the new session.
+Start a new Codex conversation after installation.
 
-### Usage
-
-Invoke it explicitly:
+### Use
 
 ```text
 Use $job-portfolio-readme to inspect this repository and rewrite README.md
-as a bilingual portfolio README. Base every claim on repository evidence and
-keep security or cleanup findings in the private delivery report.
+for job applications. Write complete Chinese and English editions, and base
+every claim on repository evidence.
 ```
 
-Or describe a matching goal naturally:
+You can also specify the emphasis:
 
 ```text
-Rewrite this robotics project README for job applications. Make my ROS 2
-perception contribution clear, preserve team attribution, and write natural
-Chinese and English editions.
+Use $job-portfolio-readme to improve this ROS 2 project README. Make my
+perception and system-integration work clear, preserve team attribution,
+and include the verified experiment results.
 ```
 
-The skill is intended for public repositories used in job applications, portfolio reviews, and technical interviews. It is not intended to replace API documentation, contributor guides, or security audit reports.
+```text
+Use $job-portfolio-readme to rewrite this AI application's README. Clearly
+separate the upstream model from the API, backend, and UI work I completed.
+```
 
-### Repository structure
+The skill supports three modes:
+
+| Request | Behaviour |
+|---|---|
+| Review | Analyse the current README and report specific improvements |
+| Draft | Produce a replacement without modifying the repository |
+| Direct edit | Update the authorised README and verify the result |
+
+### What you receive
+
+The public README can include:
+
+- project purpose and value;
+- personal role and ownership boundaries;
+- architecture or workflow where useful;
+- technology stack with real responsibilities;
+- verified results, demos, screenshots, or artifacts;
+- setup and usage supported by the repository;
+- concise upstream and collaborator attribution;
+- natural Chinese and English editions.
+
+The delivery summary reports changed files, evidence checked, validation performed, and any facts or attribution that still require confirmation. Security or cleanup findings remain separate from the public README.
+
+### Quality rules
+
+The skill will not:
+
+- invent measurements, deployment status, users, training, or ownership;
+- describe an upstream model as original work;
+- weaken collaborator attribution to make a project sound stronger;
+- expose credentials or remediation notes in public copy;
+- publish a generic list of missing production features;
+- shorten the Chinese edition into a summary of the English version;
+- reuse one rigid structure for unrelated projects.
+
+### Package structure
 
 ```text
 .
@@ -145,113 +132,43 @@ The skill is intended for public repositories used in job applications, portfoli
     └── bilingual-style.md
 ```
 
-### Design principles
+This is an instruction-only skill. It has no runtime dependencies and requires no API key.
 
-- **Evidence before copy:** the old README is a claim source, not final authority.
-- **Ownership before promotion:** stronger marketing never justifies weaker attribution.
-- **Structure follows project type:** a research experiment should not read like a web prototype.
-- **Technology needs a role:** a useful stack section explains what each technology does.
-- **Bilingual means equal substance:** Chinese is not a shortened translation of English.
-- **Packaging is selection, not fabrication:** present the strongest true facts and omit unsupported claims.
-
-### Example applications
-
-The workflow was developed while revising a mixed portfolio containing robotics research, ROS 2 system integration, RAG, workflow automation, Django prototypes, an AI model-integration product, and a Jekyll portfolio site. Examples include:
-
-- [BARNnavigation](https://github.com/XuYu-kyra/BARNnavigation) — research question, paired experiment design, and measured results;
-- [robotic-systems-design](https://github.com/XuYu-kyra/robotic-systems-design) — ROS 2 perception responsibility and team attribution;
-- [LB](https://github.com/XuYu-kyra/LB) — upstream OOTDiffusion attribution and mini-program product integration;
-- [Facial_music](https://github.com/XuYu-kyra/Facial_music) — accurate separation of inherited FER code and application-layer work.
-
-### References
-
-- [OpenAI: Skills](https://developers.openai.com/plugins/concepts/skills)
-- [OpenAI: Testing Agent Skills Systematically](https://developers.openai.com/blog/eval-skills)
+See [OpenAI's Skills documentation](https://developers.openai.com/plugins/concepts/skills) for the underlying format.
 
 ---
 
 ## 中文
 
-这是一个用于 Codex 的求职作品集 README skill，目标是把真实 GitHub 仓库整理成 **有证据、有技术深度、归属清楚的中英文项目介绍**。它会先检查代码、文档、实验结果、媒体、许可证和署名，再决定公开 README 应该写什么，而不是直接套用一份通用模板。
+`job-portfolio-readme` 用于把真实 GitHub 仓库整理成适合求职和技术作品集展示的中英文 README。它会先检查仓库证据，再组织项目价值、个人贡献、技术实现和结果；不会编造数据、夸大 ownership，也不会让所有项目使用同一套模板。
 
-这是纯指令与参考资料组成的 skill，不依赖 API key、外部服务或额外运行环境。
+### 可以做什么
 
-### 为什么做这个 skill
+- 检查源码、依赖、文档、测试、实验结果、演示、许可证和 attribution；
+- 找出项目中最值得优先展示且有证据支持的内容；
+- 区分本人实现、团队工作、上游代码和集成工作；
+- 根据项目类型选择合适的 README 结构；
+- 说明每项技术在系统中的真实作用；
+- 分别撰写自然、内容完整的中文和英文版本；
+- 将安全问题和仓库清理建议留在私下交付说明中；
+- 使用面向招聘阅读的质量标准检查最终结果。
 
-用于求职的项目 README 很容易走向两个极端：一种只记录安装命令，看不出项目价值和个人工作；另一种虽然“包装感”很强，却可能夸大 ownership、编造结果，甚至把密钥整改、仓库缺点和产品化待办直接写给招聘者看。
+### 支持的项目
 
-这个 skill 将 README 重写整理为一套可复用流程：
+- 研究与实验项目
+- 机器人和 ROS 系统
+- 自动化与数据工作流
+- AI 与 RAG 应用
+- 基于上游模型的集成产品
+- Web 与课程项目
+- 个人作品集和静态网站
+- Library 与开发者工具
 
-- 写作前检查源码、文档、结果、演示、许可证和 attribution；
-- 所有重要结论都从仓库证据出发，而不是填充固定模板；
-- 明确区分 **本人实现、基于上游适配、系统集成、继续扩展和团队共同完成**；
-- 根据研究、机器人、RAG、自动化、Web、作品集和模型集成等项目类型选择不同结构；
-- 从同一份事实模型分别写自然、内容完整的中文和英文版本；
-- 将招聘者看到的 README 与安全、来源和仓库清理意见分开；
-- 使用 100 分质量量表和自动失败条件检查最终稿。
-
-### Skill 是不是一个大型 prompt？
-
-`SKILL.md` 是核心指令，因此它确实具有 prompt 的性质；但完整 skill 更像一个小型、可复用的工作流包，而不是一次性长提示词。Codex 会先读取 skill 的名称和描述，在任务匹配时加载完整指令，再按需读取引用的规则文件。
-
-这个仓库中：
-
-- `SKILL.md` 定义触发场景、执行流程、公开/私下输出边界和硬性规则；
-- `references/quality-rubric.md` 提供评分标准与自动失败条件；
-- `references/project-archetypes.md` 提供不同项目类型的结构选择，但不强制统一模板；
-- `references/bilingual-style.md` 约束中英文内容对等、自然度和 ownership 用词；
-- `agents/openai.yaml` 提供显示信息和默认调用提示。
-
-这种拆分比复制一段超长 prompt 更容易维护、检查和迭代。
-
-### 工作流程
-
-```text
-确认受众与修改范围
-        │
-        ▼
-检查仓库证据
-        │
-        ▼
-建立私下 claim ledger
-        │
-        ▼
-提炼项目的核心定位
-        │
-        ▼
-选择适合的项目结构
-        │
-        ▼
-分别撰写自然的中英文版本
-        │
-        ▼
-评分并检查结果、ownership 与 attribution
-        │
-        ▼
-发布 README，私下交付审计与待确认事项
-```
-
-公开 README 同时考虑三种阅读深度：
-
-1. **15 秒：** 看懂项目价值、最强证据或演示，以及个人角色；
-2. **2 分钟：** 了解架构、个人贡献、技术作用和结果；
-3. **技术追问：** 能继续讨论设计决策、取舍、评测、复现和 attribution。
-
-### 公开 README 与私下审查
-
-| 公开 README | 私下交付报告 |
-|---|---|
-| 项目价值和用户/研究结果 | 凭据轮换和历史泄露处理 |
-| 个人贡献和 ownership 边界 | 仓库清理与 hygiene 问题 |
-| 架构与有意义的工程决策 | 缺失的生产化能力建议 |
-| 已验证的结果、演示和产物 | 未验证事实与来源疑问 |
-| 运行方式和简洁 attribution | 不应出现在公开文案中的后续工作 |
-
-这条边界既能避免把求职 README 写成审计报告或道歉信，也不会牺牲私下检查的真实性。
+不同项目会采用不同重点。研究项目优先说明问题、方法和结果；机器人项目强调真实运行环境、接口和系统协作；模型集成项目明确区分上游模型与本人完成的 API、后端、前端和产品链路。
 
 ### 安装
 
-Codex skill 可以安装到 `~/.codex/skills/`，供当前用户使用；也可以放在项目的 `.codex/skills/` 中，只作用于该仓库。包含 `SKILL.md` 的目录就是一个完整 skill 包。
+Codex 会从包含 `SKILL.md` 的目录中发现 skill。可以安装到当前用户，也可以只安装到某个项目。
 
 #### 当前用户安装
 
@@ -269,36 +186,72 @@ git clone https://github.com/XuYu-kyra/readme-skill.git `
   "$env:USERPROFILE\.codex\skills\job-portfolio-readme"
 ```
 
-#### 单个仓库安装
+#### 单个项目安装
 
-在目标仓库根目录运行：
+在需要处理的仓库根目录运行：
 
 ```bash
 git clone https://github.com/XuYu-kyra/readme-skill.git \
   .codex/skills/job-portfolio-readme
 ```
 
-安装后开启一个新的 Codex 对话，使新会话能够读取该 skill 的元数据。
+安装后开启新的 Codex 对话。
 
-### 使用方式
-
-可以直接点名调用：
+### 使用
 
 ```text
-使用 $job-portfolio-readme 检查这个仓库，并把 README.md 重写成用于求职的
-中英文项目介绍。所有结论以仓库证据为准，安全或清理问题放在私下交付报告中。
+使用 $job-portfolio-readme 检查这个仓库，并把 README.md 重写成求职版本。
+分别写完整的中文和英文内容，所有结论都以仓库证据为准。
 ```
 
-也可以直接描述符合触发条件的任务：
+也可以说明希望强调的方向：
 
 ```text
-把这个机器人项目的 README 重写成求职版本。说明我负责的 ROS 2 感知工作，
-保留团队 attribution，并分别写自然、内容完整的中文和英文版本。
+使用 $job-portfolio-readme 优化这个 ROS 2 项目的 README。重点说明我负责的
+感知与系统集成工作，保留团队 attribution，并加入有证据支持的实验结果。
 ```
 
-这个 skill 适合求职项目、作品集审查和技术面试准备，不用于替代 API 文档、贡献者手册或安全审计报告。
+```text
+使用 $job-portfolio-readme 重写这个 AI 应用的 README。明确区分上游模型，
+以及我完成的 API、后端和前端工作。
+```
 
-### 仓库结构
+支持三种工作方式：
+
+| 请求方式 | 行为 |
+|---|---|
+| 审核 | 检查当前 README，并给出具体修改建议 |
+| 起草 | 生成替换稿，但不修改仓库文件 |
+| 直接修改 | 更新授权的 README，并检查最终结果 |
+
+### 最终交付
+
+公开 README 可以包含：
+
+- 清楚的项目目标与价值；
+- 个人职责和 ownership 边界；
+- 必要的架构或工作流程；
+- 说明实际作用的技术栈；
+- 已验证的结果、演示、截图或产物；
+- 与仓库一致的安装和使用方式；
+- 简洁准确的上游与团队 attribution；
+- 自然且内容对等的中英文版本。
+
+交付摘要会说明修改文件、检查过的证据、完成的验证，以及仍需确认的事实或 attribution。安全和仓库清理问题不会混入公开 README。
+
+### 质量规则
+
+这个 skill 不会：
+
+- 编造指标、部署状态、用户量、模型训练或个人 ownership；
+- 把上游模型描述成本人原创；
+- 为了包装效果弱化团队成员或原作者署名；
+- 在公开 README 中写入凭据或密钥整改说明；
+- 公开罗列项目尚未完成的生产化功能；
+- 把中文版压缩成英文版的摘要；
+- 对不同类型项目重复使用僵硬的统一结构。
+
+### 目录结构
 
 ```text
 .
@@ -311,25 +264,7 @@ git clone https://github.com/XuYu-kyra/readme-skill.git \
     └── bilingual-style.md
 ```
 
-### 设计原则
+这是一个纯指令型 skill，不需要额外运行依赖或 API key。
 
-- **先找证据，再写文案：** 原 README 只是 claim 来源，不是最终事实；
-- **先说清归属，再做包装：** 更强的宣传不能以弱化 attribution 为代价；
-- **结构服从项目类型：** 研究实验不应该和网页原型使用同一套叙事；
-- **技术栈必须说明作用：** 不只列技术名称，还要说明它在项目中负责什么；
-- **双语必须内容对等：** 中文不能只是英文的压缩摘要；
-- **包装是选择事实，不是创造事实：** 呈现最强的真实内容，删除没有证据的说法。
+关于 skill 的基础格式，可参考 [OpenAI Skills 文档](https://developers.openai.com/plugins/concepts/skills)。
 
-### 实际应用
-
-这个流程是在整理一组混合型求职作品集时形成的，覆盖机器人研究、ROS 2 系统集成、RAG、数据工作流、Django 原型、AI 模型集成产品和 Jekyll 作品集。例如：
-
-- [BARNnavigation](https://github.com/XuYu-kyra/BARNnavigation)：研究问题、配对实验设计与量化结果；
-- [robotic-systems-design](https://github.com/XuYu-kyra/robotic-systems-design)：ROS 2 感知职责与团队 attribution；
-- [LB](https://github.com/XuYu-kyra/LB)：OOTDiffusion 上游归属与小程序产品集成；
-- [Facial_music](https://github.com/XuYu-kyra/Facial_music)：准确区分已有 FER 代码和本人完成的应用层工作。
-
-### 参考资料
-
-- [OpenAI：Skills](https://developers.openai.com/plugins/concepts/skills)
-- [OpenAI：系统化测试 Agent Skills](https://developers.openai.com/blog/eval-skills)
